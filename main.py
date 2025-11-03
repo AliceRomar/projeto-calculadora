@@ -44,7 +44,6 @@ def salvar_alimentos_no_json(lista_de_alimentos: list):
 
     try:
         with open(NOME_ARQUIVOS_ALIMENTOS, "w") as f:
-            # Salva a lista de dicionários no JSON
             json.dump(lista_para_salvar, f, indent=4)
     except IOError as e:
         print(f"Erro ao salvar alimentos no JSON: {e}")
