@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 
+
 class Usuario:
     """Guarda a meta de calorias do usuário para a sessão atual."""
+
     def __init__(self):
         self._meta_calorica = 0.0
 
@@ -10,14 +12,16 @@ class Usuario:
         if meta > 0:
             self._meta_calorica = meta
         else:
-            print ("Erro: A meta de calorias deve ser uma valor positivo.")
+            print("Erro: A meta de calorias deve ser uma valor positivo.")
 
     def get_meta_calorica(self) -> float:
         """Retorna o valor da meta de calorias definida."""
         return self._meta_calorica
 
+
 class Alimento(ABC):
     """Classe base abstrata para todos os tipos de alimentos."""
+
     def __init__(self, nome: str):
         self._nome = nome
 
@@ -26,12 +30,19 @@ class Alimento(ABC):
         """Método abstrato para calcular calorias. A implementação varia."""
         pass
 
+    @abstractmethod
+    def to_dict(self):
+        """Converte o objeto para um dicionário serializável em JSON."""
+        pass
+
     def get_nome(self) -> str:
         """Retorna o nome do alimento."""
         return self._nome
-    
+
+
 class AlimentoPorGrama(Alimento):
     """Representa um alimento medido em gramas."""
+
     def __init__(self, nome: str, calorias_por_100g: float):
         super().__init__(nome)
         self._calorias_por_100g = calorias_por_100g
@@ -40,8 +51,17 @@ class AlimentoPorGrama(Alimento):
         """Calcula as calorias com base no peso em gramas."""
         return (self._calorias_por_100g / 100) * gramas
 
+    def to_dict(self):
+        return {
+            "tipo": "grama",
+            "nome": self._nome,
+            "calorias": self._calorias_por_100g,
+        }
+
+
 class AlimentoPorUnidade(Alimento):
     """Representa um alimento medido em unidades."""
+
     def __init__(self, nome: str, calorias_por_unidade: float):
         super().__init__(nome)
         self._calorias_por_unidade = calorias_por_unidade
@@ -50,8 +70,17 @@ class AlimentoPorUnidade(Alimento):
         """Calcula as calorias com base no número de unidades."""
         return self._calorias_por_unidade * unidades
 
+    def to_dict(self):
+        return {
+            "tipo": "unidade",
+            "nome": self._nome,
+            "calorias": self._calorias_por_unidade,
+        }
+
+
 class ItemConsumido:
     """Representa a junção de um objeto Alimento com a quantidade consumida."""
+
     def __init__(self, alimento: Alimento, quantidade: float):
         self._alimento = alimento
         self._quantidade = quantidade
@@ -63,6 +92,7 @@ class ItemConsumido:
     def get_descricao(self) -> str:
         """Retorna uma descrição textual do item para o resumo."""
         return f"{self._alimento.get_nome()}: {self._quantidade}"
+
 
 class Refeicao:
     def __init__(self, nome: str):
@@ -89,8 +119,10 @@ class Refeicao:
         """Retorna a lista de itens da refeição."""
         return self._itens
 
+
 class InterfaceTerminal:
     """Responsável por exibir os resumos e interagir com o usuário no terminal."""
+
     def exibir_resumo(self, usuario: Usuario, refeicoes: list):
         """Recebe o usuário e a lista de refeições e exibe um resumo formatado."""
         print("\n--- RESUMO DIÁRIO ---")
