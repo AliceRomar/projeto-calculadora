@@ -7,12 +7,12 @@ from modelos import (
     InterfaceTerminal,
 )
 
-NOME_ARQUIVOS_ALIMENTOS = "alimentos.json"
+NOME_ARQUIVO_ALIMENTOS = "alimentos.json"
 
 
 def carregar_alimentos_do_json():
     try:
-        with open(NOME_ARQUIVOS_ALIMENTOS, "r") as f:
+        with open(NOME_ARQUIVO_ALIMENTOS, "r") as f:
             lista_de_dicionarios = json.load(f)
 
         banco_de_alimentos = []
@@ -43,7 +43,7 @@ def salvar_alimentos_no_json(lista_de_alimentos: list):
     lista_para_salvar = [alimento.to_dict() for alimento in lista_de_alimentos]
 
     try:
-        with open(NOME_ARQUIVOS_ALIMENTOS, "w") as f:
+        with open(NOME_ARQUIVO_ALIMENTOS, "w") as f:
             json.dump(lista_para_salvar, f, indent=4)
     except IOError as e:
         print(f"Erro ao salvar alimentos no JSON: {e}")
@@ -90,7 +90,6 @@ def adicionar_refeicao(lista_de_refeicoes: list, banco_de_alimentos: list):
             escolha_num = int(escolha_str)
 
             if escolha_num == 0:
-                # 5. Atalho para cadastrar um novo alimento
                 adicionar_novo_alimento(banco_de_alimentos)
                 print("--- Retornando à adição de refeição ---")
                 continue
@@ -123,7 +122,7 @@ def adicionar_refeicao(lista_de_refeicoes: list, banco_de_alimentos: list):
 
         except ValueError:
             print("Entrada inválida. Por favor, digite apenas números.")
-            continue  # Reinicia o loop de adicionar alimento
+            continue
 
         continuar = input(
             "\nDeseja adicionar outro alimento a esta refeição? [s/n]: "
@@ -131,7 +130,7 @@ def adicionar_refeicao(lista_de_refeicoes: list, banco_de_alimentos: list):
         if continuar != "s":
             break
 
-        lista_de_refeicoes.append(nova_refeicao)
+    lista_de_refeicoes.append(nova_refeicao)
     print(f"Refeição '{nome_refeicao}' adicionada com sucesso!")
 
 
@@ -253,7 +252,6 @@ def main():
     lista_de_refeicoes = []
     interface = InterfaceTerminal()
     banco_de_alimentos = carregar_alimentos_do_json()
-    interface = InterfaceTerminal()
 
     print("Calculadora de Calorias")
 

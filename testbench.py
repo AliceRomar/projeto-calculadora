@@ -1,5 +1,10 @@
-
-from modelos import Usuario, AlimentoPorGrama, AlimentoPorUnidade, Refeicao, InterfaceTerminal
+from modelos import (
+    Usuario,
+    AlimentoPorGrama,
+    AlimentoPorUnidade,
+    Refeicao,
+    InterfaceTerminal,
+)
 
 print("--- Iniciando Simulação da Calculadora de Calorias ---")
 
@@ -21,13 +26,13 @@ print("\n3. Montando as refeições do dia...")
 almoco = Refeicao(nome="Almoço")
 
 almoco.adicionar_item(arroz, 200)  # 200g de arroz
-almoco.adicionar_item(bife, 150)   # 150g de bife
+almoco.adicionar_item(bife, 150)  # 150g de bife
 print(f"   -> Refeição '{almoco.get_nome()}' montada.")
 
 
 lanche = Refeicao(nome="Lanche da Tarde")
-lanche.adicionar_item(maca, 1)     # 1 maçã
-lanche.adicionar_item(banana, 2)   # 2 bananas
+lanche.adicionar_item(maca, 1)  # 1 maçã
+lanche.adicionar_item(banana, 2)  # 2 bananas
 print(f"   -> Refeição '{lanche.get_nome()}' montada.")
 
 refeicoes_do_dia = [almoco, lanche]
